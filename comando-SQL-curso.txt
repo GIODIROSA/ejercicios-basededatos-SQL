@@ -1,0 +1,123 @@
+INSERT INTO cliente_ordenes_productos(cliente_orden_id, producto_id, cantidad)
+VALUES (1, 11, 2);
+
+UPDATE productos SET producto_stock = producto_stock - 2
+WHERE producto_id = 11;
+
+
+SELECT * FROM productos;
+SELECT * FROM cliente_ordenes_productos;
+
+
+SELECT * 
+FROM productos AS p
+INNER JOIN cliente_ordenes_productos AS cop
+ON p.producto_id = cop.producto_id;
+
+
+SELECT p.producto_nombre, cop.cantidad 
+FROM productos AS p
+INNER JOIN cliente_ordenes_productos AS cop
+ON p.producto_id = cop.producto_id;
+
+SELECT 
+	p.producto_nombre, 
+	cop.cantidad,
+	cop.cantidad * p.producto_precio 
+FROM productos AS p
+INNER JOIN cliente_ordenes_productos AS cop
+ON p.producto_id = cop.producto_id;
+
+SELECT 
+	p.producto_nombre, 
+	cop.cantidad,
+	cop.cantidad * p.producto_precio AS "total por producto"
+FROM productos AS p
+INNER JOIN cliente_ordenes_productos AS cop
+ON p.producto_id = cop.producto_id;
+
+
+SELECT 
+	SUM(cop.cantidad * p.producto_precio ) AS "total a pagar"
+FROM productos AS p
+INNER JOIN cliente_ordenes_productos AS cop
+ON p.producto_id = cop.producto_id;
+
+***LEFT JOIN***
+
+SELECT * 
+FROM productos p
+LEFT JOIN cliente_ordenes_productos cop
+ON p.producto_id = cop.producto_id;
+
+
+SELECT p.producto_nombre 
+FROM productos p
+LEFT JOIN cliente_ordenes_productos cop
+ON p.producto_id = cop.producto_id
+WHERE cop.producto_id IS NULL;
+
+
+--RIGHT JOIN
+
+SELECT *
+FROM productos p
+RIGHT JOIN cliente_ordenes_productos cop
+ON p.producto_id = cop.producto_id;
+
+SELECT p.producto_nombre
+FROM productos p
+RIGHT JOIN cliente_ordenes_productos cop
+ON p.producto_id = cop.producto_id;
+
+--FULL JOIN
+
+SELECT p.producto_id, p.producto_nombre
+FROM productos p
+FULL JOIN cliente_ordenes_productos cop
+ON p.producto_id = cop.producto_id;
+
+-- JOIN * N TABLAS
+
+SELECT *
+FROM cliente_ordenes co
+JOIN cliente_ordenes_productos cop
+ON co.cliente_orden_id = cop.cliente_orden_id
+JOIN productos p
+ON cop.producto_id = p.producto_id;
+
+SELECT 
+	co.orden_fecha,
+	p.producto_nombre
+FROM cliente_ordenes co
+JOIN cliente_ordenes_productos cop
+ON co.cliente_orden_id = cop.cliente_orden_id
+JOIN productos p
+ON cop.producto_id = p.producto_id;
+
+SELECT 
+	c.cliente_nombre,
+	co.orden_fecha,
+	cop.cantidad,
+	p.producto_nombre,
+	cop.cantidad * p.producto_precio AS total
+FROM clientes c
+JOIN cliente_ordenes co
+ON c.cliente_id = co.cliente_id
+JOIN cliente_ordenes_productos cop
+ON co.cliente_orden_id = cop.cliente_orden_id
+JOIN productos p
+ON cop.producto_id = p.producto_id;
+
+
+
+
+
+
+
+
+
+
+
+
+
